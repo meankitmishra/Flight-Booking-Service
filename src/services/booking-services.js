@@ -132,4 +132,16 @@ async function cancelTicket(data) {
 	}
 }
 
-module.exports = { createBooking, makePayment };
+async function cancelOldBooking() {
+	try {
+		// console.log("here service");
+		const time = new Date(Date.now() - 1000 * 300); //5 min ago
+		const response = await bookingRepository.cancelOldBookings(time);
+		return response;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+}
+
+module.exports = { createBooking, makePayment, cancelOldBooking };
